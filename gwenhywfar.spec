@@ -1,15 +1,13 @@
 Summary:	Gwenhywfar - a multi-platform helper library for networking and security
 Summary(pl):	Gwenhywfar - wieloplatformowa biblioteka pomocnicza do sieci i bezpieczeñstwa
 Name:		gwenhywfar
-Version:	1.19.2
+Version:	1.99.3
 Release:	1
 License:	LGPL v2.1+ with OpenSSL linking exception
 Group:		Libraries
 Source0:	http://dl.sourceforge.net/gwenhywfar/%{name}-%{version}.tar.gz
-# Source0-md5:	feb01091658693091606465752ee4bee
+# Source0-md5:	5670fb1752db4638abdb9c75ee242fa7
 URL:		http://gwenhywfar.sourceforge.net/
-BuildRequires:	libstdc++-devel
-BuildRequires:	ncurses-ext-devel
 BuildRequires:	openssl-devel
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
@@ -36,10 +34,6 @@ Summary(pl):	Pliki nag³ówkowe biblioteki Gwenhywfar
 Group:		Development/Libraries
 Requires:	%{name} = %{version}-%{release}
 Requires:	openssl-devel
-# for gwenui only
-#Requires:	ncurses-ext-devel
-# for gwenpp only
-#Requires:	libstdc++-devel
 
 %description devel
 Header files for Gwenhywfar library.
@@ -64,7 +58,6 @@ Statyczna biblioteka Gwenhywfar.
 
 %build
 %configure \
-	CPPFLAGS="-I/usr/include/ncurses" \
 	--enable-static \
 	--with-openssl-libs=%{_libdir}
 %{__make}
@@ -88,7 +81,6 @@ rm -rf $RPM_BUILD_ROOT
 %files -f %{name}.lang
 %defattr(644,root,root,755)
 %doc AUTHORS ChangeLog NEWS README TODO
-%attr(755,root,root) %{_bindir}/dlgtest
 %attr(755,root,root) %{_bindir}/gct-tool
 %attr(755,root,root) %{_bindir}/mklistdoc
 %attr(755,root,root) %{_bindir}/typemaker
@@ -111,7 +103,6 @@ rm -rf $RPM_BUILD_ROOT
 %attr(755,root,root) %{_libdir}/lib*.so
 %{_libdir}/lib*.la
 %{_includedir}/gwenhywfar
-%{_includedir}/gwenpp
 %{_aclocaldir}/gwenhywfar.m4
 %{_pkgconfigdir}/gwenhywfar.pc
 
