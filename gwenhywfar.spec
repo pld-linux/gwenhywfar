@@ -1,5 +1,5 @@
 Summary:	Gwenhywfar - a multi-platform helper library for networking and security
-Summary(pl):	Gwenhywfar - wieloplatformowa biblioteka pomocnicza do sieci i bezpieczeñstwa
+Summary(pl.UTF-8):   Gwenhywfar - wieloplatformowa biblioteka pomocnicza do sieci i bezpieczeÅ„stwa
 Name:		gwenhywfar
 Version:	2.5.2
 Release:	1
@@ -24,18 +24,18 @@ security applications and libraries. It is used by:
  - Simthetic, the simulation tool (http://simthetic.sourceforge.net/)
  - AqBanking/AqHBCI (http://www.aquamaniac.de/aqbanking/).
 
-%description -l pl
+%description -l pl.UTF-8
 To jest Gwenhywfar - wieloplatformowa biblioteka pomocnicza do
-aplikacji i bibliotek zwi±zanych z sieci± i bezpieczeñstwem. Jest
-u¿ywana przez:
+aplikacji i bibliotek zwiÄ…zanych z sieciÄ… i bezpieczeÅ„stwem. Jest
+uÅ¼ywana przez:
  - Libchipcard2 (http://www.libchipcard.de/),
  - OpenHBCI2 (http://www.openhbci.de/),
- - narzêdzie do symulacji Simthetic (http://simthetic.sourceforge.net/)
+ - narzÄ™dzie do symulacji Simthetic (http://simthetic.sourceforge.net/)
  - AqBanking/AqHBCI (http://www.aquamaniac.de/aqbanking/).
 
 %package devel
 Summary:	Header files for Gwenhywfar library
-Summary(pl):	Pliki nag³ówkowe biblioteki Gwenhywfar
+Summary(pl.UTF-8):   Pliki nagÅ‚Ã³wkowe biblioteki Gwenhywfar
 Group:		Development/Libraries
 Requires:	%{name} = %{version}-%{release}
 Requires:	openssl-devel
@@ -43,19 +43,19 @@ Requires:	openssl-devel
 %description devel
 Header files for Gwenhywfar library.
 
-%description devel -l pl
-Pliki nag³ówkowe biblioteki Gwenhywfar.
+%description devel -l pl.UTF-8
+Pliki nagÅ‚Ã³wkowe biblioteki Gwenhywfar.
 
 %package static
 Summary:	Static Gwenhywfar library
-Summary(pl):	Statyczna biblioteka Gwenhywfar
+Summary(pl.UTF-8):   Statyczna biblioteka Gwenhywfar
 Group:		Development/Libraries
 Requires:	%{name}-devel = %{version}-%{release}
 
 %description static
 Static Gwenhywfar library.
 
-%description static -l pl
+%description static -l pl.UTF-8
 Statyczna biblioteka Gwenhywfar.
 
 %prep
