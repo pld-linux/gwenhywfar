@@ -1,5 +1,5 @@
 Summary:	Gwenhywfar - a multi-platform helper library for networking and security
-Summary(pl.UTF-8):   Gwenhywfar - wieloplatformowa biblioteka pomocnicza do sieci i bezpieczeństwa
+Summary(pl.UTF-8):	Gwenhywfar - wieloplatformowa biblioteka pomocnicza do sieci i bezpieczeństwa
 Name:		gwenhywfar
 Version:	2.5.2
 Release:	1
@@ -35,7 +35,7 @@ używana przez:
 
 %package devel
 Summary:	Header files for Gwenhywfar library
-Summary(pl.UTF-8):   Pliki nagłówkowe biblioteki Gwenhywfar
+Summary(pl.UTF-8):	Pliki nagłówkowe biblioteki Gwenhywfar
 Group:		Development/Libraries
 Requires:	%{name} = %{version}-%{release}
 Requires:	openssl-devel
@@ -48,7 +48,7 @@ Pliki nagłówkowe biblioteki Gwenhywfar.
 
 %package static
 Summary:	Static Gwenhywfar library
-Summary(pl.UTF-8):   Statyczna biblioteka Gwenhywfar
+Summary(pl.UTF-8):	Statyczna biblioteka Gwenhywfar
 Group:		Development/Libraries
 Requires:	%{name}-devel = %{version}-%{release}
 
