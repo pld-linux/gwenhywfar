@@ -108,6 +108,7 @@ rm -rf $RPM_BUILD_ROOT
 %dir %{_libdir}/gwenhywfar/plugins/*/dbio
 %attr(755,root,root) %{_libdir}/gwenhywfar/plugins/*/dbio/*.so*
 %{_libdir}/gwenhywfar/plugins/*/dbio/*.xml
+%dir %{_datadir}/gwenhywfar
 %{_datadir}/gwenhywfar/ca-bundle.crt
 
 %files devel
