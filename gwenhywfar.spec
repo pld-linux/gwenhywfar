@@ -1,12 +1,14 @@
+%define		beta	beta
+#
 Summary:	Gwenhywfar - a multi-platform helper library for networking and security
 Summary(pl.UTF-8):	Gwenhywfar - wieloplatformowa biblioteka pomocnicza do sieci i bezpieczeństwa
 Name:		gwenhywfar
-Version:	2.6.1
-Release:	1
+Version:	2.9.7
+Release:	0.%{beta}.1
 License:	LGPL v2.1+ with OpenSSL linking exception
 Group:		Libraries
-Source0:	http://dl.sourceforge.net/gwenhywfar/%{name}-%{version}.tar.gz
-# Source0-md5:	2cf970cd9d966e95c4254fc89530eca7
+Source0:	http://dl.sourceforge.net/gwenhywfar/%{name}-%{version}%{beta}.tar.gz
+# Source0-md5:	c0f78f063461fde7d155eec042b6fd40
 Patch0:		%{name}-visibility.patch
 URL:		http://gwenhywfar.sourceforge.net/
 BuildRequires:	autoconf >= 2.56
@@ -59,7 +61,7 @@ Static Gwenhywfar library.
 Statyczna biblioteka Gwenhywfar.
 
 %prep
-%setup -q
+%setup -q -n %{name}-%{version}%{beta}
 %patch0 -p1
 
 %build
@@ -100,23 +102,20 @@ rm -rf $RPM_BUILD_ROOT
 %dir %{_libdir}/gwenhywfar
 %dir %{_libdir}/gwenhywfar/plugins
 %dir %{_libdir}/gwenhywfar/plugins/*
-%dir %{_libdir}/gwenhywfar/plugins/*/crypttoken
-%attr(755,root,root) %{_libdir}/gwenhywfar/plugins/*/crypttoken/*.so*
-%{_libdir}/gwenhywfar/plugins/*/crypttoken/*.xml
+%dir %{_libdir}/gwenhywfar/plugins/*/ct
+%attr(755,root,root) %{_libdir}/gwenhywfar/plugins/*/ct/*.so*
+%{_libdir}/gwenhywfar/plugins/*/ct/*.xml
 %dir %{_libdir}/gwenhywfar/plugins/*/dbio
 %attr(755,root,root) %{_libdir}/gwenhywfar/plugins/*/dbio/*.so*
 %{_libdir}/gwenhywfar/plugins/*/dbio/*.xml
-%dir %{_libdir}/gwenhywfar/plugins/*/storage
-%attr(755,root,root) %{_libdir}/gwenhywfar/plugins/*/storage/*.so*
-%{_libdir}/gwenhywfar/plugins/*/storage/*.xml
-%{_sysconfdir}/gwen-public-ca.crt
+%{_datadir}/gwenhywfar/ca-bundle.crt
 
 %files devel
 %defattr(644,root,root,755)
 %attr(755,root,root) %{_bindir}/gwenhywfar-config
 %attr(755,root,root) %{_libdir}/libgwenhywfar.so
 %{_libdir}/libgwenhywfar.la
-%{_includedir}/gwenhywfar
+%{_includedir}/gwenhywfar3
 %{_aclocaldir}/gwenhywfar.m4
 %{_pkgconfigdir}/gwenhywfar.pc
 
