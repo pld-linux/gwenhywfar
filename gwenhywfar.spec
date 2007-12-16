@@ -1,17 +1,19 @@
+# TODO: define _one_, system-wide place for ca-bundle.crt and use one, up-to-date file
 Summary:	Gwenhywfar - a multi-platform helper library for networking and security
 Summary(pl.UTF-8):	Gwenhywfar - wieloplatformowa biblioteka pomocnicza do sieci i bezpieczeństwa
 Name:		gwenhywfar
-Version:	2.6.1
+Version:	3.0.0
 Release:	1
 License:	LGPL v2.1+ with OpenSSL linking exception
 Group:		Libraries
 Source0:	http://dl.sourceforge.net/gwenhywfar/%{name}-%{version}.tar.gz
-# Source0-md5:	2cf970cd9d966e95c4254fc89530eca7
+# Source0-md5:	53edbfe4aaeb92d7f3ca21df72627fd8
 Patch0:		%{name}-visibility.patch
 URL:		http://gwenhywfar.sourceforge.net/
-BuildRequires:	autoconf >= 2.56
+BuildRequires:	autoconf >= 2.60
 BuildRequires:	automake
 BuildRequires:	gettext-devel
+BuildRequires:	gnutls-devel >= 1.6.1
 BuildRequires:	libtool
 BuildRequires:	openssl-devel
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
@@ -19,7 +21,7 @@ BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 %description
 This is Gwenhywfar, a multi-platform helper library for networking and
 security applications and libraries. It is used by:
- - Libchipcard2 (http://www.libchipcard.de/),
+ - Libchipcard (http://www.libchipcard.de/),
  - OpenHBCI2 (http://www.openhbci.de/),
  - Simthetic, the simulation tool (http://simthetic.sourceforge.net/)
  - AqBanking/AqHBCI (http://www.aquamaniac.de/aqbanking/).
@@ -28,7 +30,7 @@ security applications and libraries. It is used by:
 To jest Gwenhywfar - wieloplatformowa biblioteka pomocnicza do
 aplikacji i bibliotek związanych z siecią i bezpieczeństwem. Jest
 używana przez:
- - Libchipcard2 (http://www.libchipcard.de/),
+ - Libchipcard (http://www.libchipcard.de/),
  - OpenHBCI2 (http://www.openhbci.de/),
  - narzędzie do symulacji Simthetic (http://simthetic.sourceforge.net/)
  - AqBanking/AqHBCI (http://www.aquamaniac.de/aqbanking/).
@@ -38,7 +40,7 @@ Summary:	Header files for Gwenhywfar library
 Summary(pl.UTF-8):	Pliki nagłówkowe biblioteki Gwenhywfar
 Group:		Development/Libraries
 Requires:	%{name} = %{version}-%{release}
-Requires:	openssl-devel
+Requires:	gnutls-devel >= 1.6.1
 
 %description devel
 Header files for Gwenhywfar library.
@@ -63,6 +65,8 @@ Statyczna biblioteka Gwenhywfar.
 %patch0 -p1
 
 %build
+# gettextize not used (custom support instead of AM_GNU_GETTEXT)
+touch config.rpath
 %{__libtoolize}
 %{__aclocal} -I m4
 %{__autoconf}
@@ -97,26 +101,25 @@ rm -rf $RPM_BUILD_ROOT
 %attr(755,root,root) %{_bindir}/typemaker
 %attr(755,root,root) %{_bindir}/xmlmerge
 %attr(755,root,root) %{_libdir}/libgwenhywfar.so.*.*.*
+%attr(755,root,root) %ghost %{_libdir}/libgwenhywfar.so.47
 %dir %{_libdir}/gwenhywfar
 %dir %{_libdir}/gwenhywfar/plugins
 %dir %{_libdir}/gwenhywfar/plugins/*
-%dir %{_libdir}/gwenhywfar/plugins/*/crypttoken
-%attr(755,root,root) %{_libdir}/gwenhywfar/plugins/*/crypttoken/*.so*
-%{_libdir}/gwenhywfar/plugins/*/crypttoken/*.xml
+%dir %{_libdir}/gwenhywfar/plugins/*/ct
+%attr(755,root,root) %{_libdir}/gwenhywfar/plugins/*/ct/*.so*
+%{_libdir}/gwenhywfar/plugins/*/ct/*.xml
 %dir %{_libdir}/gwenhywfar/plugins/*/dbio
 %attr(755,root,root) %{_libdir}/gwenhywfar/plugins/*/dbio/*.so*
 %{_libdir}/gwenhywfar/plugins/*/dbio/*.xml
-%dir %{_libdir}/gwenhywfar/plugins/*/storage
-%attr(755,root,root) %{_libdir}/gwenhywfar/plugins/*/storage/*.so*
-%{_libdir}/gwenhywfar/plugins/*/storage/*.xml
-%{_sysconfdir}/gwen-public-ca.crt
+# just ca-bundle.crt
+%{_datadir}/gwenhywfar
 
 %files devel
 %defattr(644,root,root,755)
 %attr(755,root,root) %{_bindir}/gwenhywfar-config
 %attr(755,root,root) %{_libdir}/libgwenhywfar.so
 %{_libdir}/libgwenhywfar.la
-%{_includedir}/gwenhywfar
+%{_includedir}/gwenhywfar3
 %{_aclocaldir}/gwenhywfar.m4
 %{_pkgconfigdir}/gwenhywfar.pc
 
