@@ -6,7 +6,8 @@ Version:	3.0.1
 Release:	1
 License:	LGPL v2.1+ with OpenSSL linking exception
 Group:		Libraries
-Source0:	http://www.aquamaniac.de/sites/download/download.php?package=01&release=02&file=01&dummy=%{name}-%{version}.tar.gz
+# http://www.aquamaniac.de/sites/download/download.php
+Source0:	%{name}-%{version}.tar.gz
 # Source0-md5:	4a2d9bc2d4ac05f631eec9d84d69a107
 Patch0:		%{name}-visibility.patch
 URL:		http://gwenhywfar.sourceforge.net/
