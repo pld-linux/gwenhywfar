@@ -1,15 +1,11 @@
---- gwenhywfar-3.0.0/configure.ac.orig	2007-11-21 19:59:52.000000000 +0100
-+++ gwenhywfar-3.0.0/configure.ac	2007-12-16 22:28:05.674132044 +0100
-@@ -788,10 +788,10 @@
+--- gwenhywfar-3.8.3/configure.ac.wiget	2009-08-03 22:31:49.000000000 +0200
++++ gwenhywfar-3.8.3/configure.ac	2009-08-03 22:32:25.000000000 +0200
+@@ -839,7 +839,7 @@ if test "$enable_visibility" = "yes"; th
    AC_MSG_CHECKING(if symbol visibility is supported)
    visibility_cflags=""
-   case `basename $CC` in 
+   case `$CC --version|head -n1|cut -f1 -d " "` in 
 -    gcc*)
-+    *-gcc*|gcc*)
++    gcc*|*-gcc*)
         dnl Determine version number (watch out: the outside square
         dnl parenteses are vitally important here!)
--       gccversion=["` ${CC} --version | head -1 | ${SED} 's/.*\([0-9]\.[0-9]\.[0-9]*\).*/\1/' `"]
-+       gccversion=["` ${CC} -dumpversion `"]
-        case $gccversion in
-          4.*)
-            # Activate -fvisibility=hidden only for explicit 4.x gcc
+        gccversion=["` ${CC} -dumpversion `"]
