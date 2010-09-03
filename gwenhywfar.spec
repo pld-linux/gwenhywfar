@@ -77,7 +77,8 @@ touch config.rpath
 %{__automake}
 %configure \
 	--enable-static \
-	--with-openssl-libs=%{_libdir}
+	--with-openssl-libs=%{_libdir} \
+	--with-qt4-includes=%{_includedir}/qt4/QtGui
 %{__make}
 
 %install
