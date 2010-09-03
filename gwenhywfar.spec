@@ -101,6 +101,7 @@ rm -rf $RPM_BUILD_ROOT
 %attr(755,root,root) %{_bindir}/gct-tool
 %attr(755,root,root) %{_bindir}/mklistdoc
 %attr(755,root,root) %{_bindir}/typemaker
+%attr(755,root,root) %{_bindir}/typemaker2
 %attr(755,root,root) %{_bindir}/xmlmerge
 %attr(755,root,root) %{_libdir}/libgwenhywfar.so.*.*.*
 %attr(755,root,root) %ghost %{_libdir}/libgwenhywfar.so.60
