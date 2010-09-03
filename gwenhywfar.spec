@@ -1,15 +1,17 @@
-# TODO: define _one_, system-wide place for ca-bundle.crt and use one, up-to-date file
+#
+# TODO: - define _one_, system-wide place for ca-bundle.crt and use one, up-to-date file
+#	- unpackaged files
+#
 Summary:	Gwenhywfar - a multi-platform helper library for networking and security
 Summary(pl.UTF-8):	Gwenhywfar - wieloplatformowa biblioteka pomocnicza do sieci i bezpieczeństwa
 Name:		gwenhywfar
-Version:	3.9.0
-Release:	2
+Version:	4.0.1
+Release:	1
 License:	LGPL v2.1+ with OpenSSL linking exception
 Group:		Libraries
 # http://www2.aquamaniac.de/sites/download/packages.php
 Source0:	%{name}-%{version}.tar.gz
-# Source0-md5:	3cb73bb2d08f247bf9481b444d823050
-Patch0:		%{name}-visibility.patch
+# Source0-md5:	513ea7b5b22edf512fa7d825ef544954
 URL:		http://gwenhywfar.sourceforge.net/
 BuildRequires:	autoconf >= 2.60
 BuildRequires:	automake
@@ -63,7 +65,6 @@ Statyczna biblioteka Gwenhywfar.
 
 %prep
 %setup -q
-%patch0 -p1
 
 %build
 # gettextize not used (custom support instead of AM_GNU_GETTEXT)
@@ -102,7 +103,7 @@ rm -rf $RPM_BUILD_ROOT
 %attr(755,root,root) %{_bindir}/typemaker
 %attr(755,root,root) %{_bindir}/xmlmerge
 %attr(755,root,root) %{_libdir}/libgwenhywfar.so.*.*.*
-%attr(755,root,root) %ghost %{_libdir}/libgwenhywfar.so.47
+%attr(755,root,root) %ghost %{_libdir}/libgwenhywfar.so.60
 %dir %{_libdir}/gwenhywfar
 %dir %{_libdir}/gwenhywfar/plugins
 %dir %{_libdir}/gwenhywfar/plugins/*
@@ -123,7 +124,7 @@ rm -rf $RPM_BUILD_ROOT
 %attr(755,root,root) %{_bindir}/gwenhywfar-config
 %attr(755,root,root) %{_libdir}/libgwenhywfar.so
 %{_libdir}/libgwenhywfar.la
-%{_includedir}/gwenhywfar3
+%{_includedir}/gwenhywfar4
 %{_aclocaldir}/gwenhywfar.m4
 %{_pkgconfigdir}/gwenhywfar.pc
 
