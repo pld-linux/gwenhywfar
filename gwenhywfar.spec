@@ -80,6 +80,7 @@ touch config.rpath
 %{__automake}
 %configure \
 	--enable-static \
+	--with-qt4-libs=%{_libdir} \
 	--with-openssl-libs=%{_libdir}
 
 %{__make}
