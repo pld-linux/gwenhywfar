@@ -12,7 +12,7 @@ Group:		Libraries
 # http://www2.aquamaniac.de/sites/download/packages.php
 Source0:	%{name}-%{version}.tar.gz
 # Source0-md5:	513ea7b5b22edf512fa7d825ef544954
-URL:		http://gwenhywfar.sourceforge.net/
+URL:		http://www.aquamaniac.de/aqbanking/
 BuildRequires:	QtGui-devel
 BuildRequires:	autoconf >= 2.60
 BuildRequires:	automake
