@@ -21,6 +21,7 @@ BuildRequires:	gettext-devel
 BuildRequires:	gnutls-devel >= 1.6.1
 BuildRequires:	libtool
 BuildRequires:	openssl-devel
+BuildRequires:	qt4-build
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
 %description
@@ -81,7 +82,7 @@ touch config.rpath
 	--enable-static \
 	--with-openssl-libs=%{_libdir}
 
-%{__make} -j 1
+%{__make}
 
 %install
 rm -rf $RPM_BUILD_ROOT
