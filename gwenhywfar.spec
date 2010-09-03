@@ -80,7 +80,8 @@ touch config.rpath
 %configure \
 	--enable-static \
 	--with-openssl-libs=%{_libdir}
-%{__make}
+
+%{__make} -j 1
 
 %install
 rm -rf $RPM_BUILD_ROOT
