@@ -1,8 +1,0 @@
---- gwenhywfar-4.0.1/gui/qt4/Makefile.am~	2010-08-15 12:52:54.000000000 +0200
-+++ gwenhywfar-4.0.1/gui/qt4/Makefile.am	2010-09-03 13:14:32.599118728 +0200
-@@ -1,4 +1,4 @@
--INCLUDES=-I$(gwenhywfar_symlinkdir) $(qt4_includes)
-+INCLUDES=-I$(gwenhywfar_symlinkdir) `pkg-config --cflags QtGui`
- 
- AM_CPPFLAGS= @visibility_cflags@
- DEFS=-DBUILDING_QT4_GUI
