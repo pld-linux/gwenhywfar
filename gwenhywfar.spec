@@ -12,7 +12,6 @@ Group:		Libraries
 # http://www2.aquamaniac.de/sites/download/packages.php
 Source0:	%{name}-%{version}.tar.gz
 # Source0-md5:	513ea7b5b22edf512fa7d825ef544954
-#Patch0:		%{name}-qt4-includes.patch
 URL:		http://gwenhywfar.sourceforge.net/
 BuildRequires:	QtGui-devel
 BuildRequires:	autoconf >= 2.60
@@ -68,7 +67,6 @@ Statyczna biblioteka Gwenhywfar.
 
 %prep
 %setup -q
-#%%patch0 -p1
 
 %build
 # gettextize not used (custom support instead of AM_GNU_GETTEXT)
