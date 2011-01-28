@@ -1,17 +1,16 @@
 #
 # TODO: - define _one_, system-wide place for ca-bundle.crt and use one, up-to-date file
-#	- unpackaged files
 #
 Summary:	Gwenhywfar - a multi-platform helper library for networking and security
 Summary(pl.UTF-8):	Gwenhywfar - wieloplatformowa biblioteka pomocnicza do sieci i bezpieczeństwa
 Name:		gwenhywfar
-Version:	4.0.2
+Version:	4.0.4
 Release:	1
 License:	LGPL v2.1+ with OpenSSL linking exception
 Group:		Libraries
 # http://www2.aquamaniac.de/sites/download/packages.php
 Source0:	%{name}-%{version}.tar.gz
-# Source0-md5:	d9f95ad9d0bee821ad373af5a57114e7
+# Source0-md5:	009f5606692efc69bac2b93896f2c4e8
 URL:		http://www.aquamaniac.de/aqbanking/
 BuildRequires:	QtGui-devel
 BuildRequires:	autoconf >= 2.60
@@ -107,7 +106,11 @@ rm -rf $RPM_BUILD_ROOT
 %attr(755,root,root) %{_bindir}/typemaker
 %attr(755,root,root) %{_bindir}/typemaker2
 %attr(755,root,root) %{_bindir}/xmlmerge
+%attr(755,root,root) %{_libdir}/libgwengui-gtk2.so.*.*.*
+%attr(755,root,root) %{_libdir}/libgwengui-qt4.so.*.*.*
 %attr(755,root,root) %{_libdir}/libgwenhywfar.so.*.*.*
+%attr(755,root,root) %ghost %{_libdir}/libgwengui-gtk2.so.0
+%attr(755,root,root) %ghost %{_libdir}/libgwengui-qt4.so.0
 %attr(755,root,root) %ghost %{_libdir}/libgwenhywfar.so.60
 %dir %{_libdir}/gwenhywfar
 %dir %{_libdir}/gwenhywfar/plugins
@@ -127,12 +130,20 @@ rm -rf $RPM_BUILD_ROOT
 %files devel
 %defattr(644,root,root,755)
 %attr(755,root,root) %{_bindir}/gwenhywfar-config
+%attr(755,root,root) %{_libdir}/libgwengui-gtk2.so
+%attr(755,root,root) %{_libdir}/libgwengui-qt4.so
 %attr(755,root,root) %{_libdir}/libgwenhywfar.so
+%{_libdir}/libgwengui-gtk2.la
+%{_libdir}/libgwengui-qt4.la
 %{_libdir}/libgwenhywfar.la
 %{_includedir}/gwenhywfar4
 %{_aclocaldir}/gwenhywfar.m4
+%{_pkgconfigdir}/gwengui-gtk2.pc
+%{_pkgconfigdir}/gwengui-qt4.pc
 %{_pkgconfigdir}/gwenhywfar.pc
 
 %files static
 %defattr(644,root,root,755)
+%{_libdir}/libgwengui-gtk2.a
+%{_libdir}/libgwengui-qt4.a
 %{_libdir}/libgwenhywfar.a
