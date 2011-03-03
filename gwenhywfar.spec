@@ -4,13 +4,13 @@
 Summary:	Gwenhywfar - a multi-platform helper library for networking and security
 Summary(pl.UTF-8):	Gwenhywfar - wieloplatformowa biblioteka pomocnicza do sieci i bezpieczeństwa
 Name:		gwenhywfar
-Version:	4.0.4
+Version:	4.0.7
 Release:	1
 License:	LGPL v2.1+ with OpenSSL linking exception
 Group:		Libraries
 # http://www2.aquamaniac.de/sites/download/packages.php
 Source0:	%{name}-%{version}.tar.gz
-# Source0-md5:	009f5606692efc69bac2b93896f2c4e8
+# Source0-md5:	542cb18858d92acdd507f0dc9586d87b
 URL:		http://www.aquamaniac.de/aqbanking/
 BuildRequires:	QtGui-devel
 BuildRequires:	autoconf >= 2.60
@@ -89,6 +89,7 @@ rm -rf $RPM_BUILD_ROOT
 	DESTDIR=$RPM_BUILD_ROOT
 
 %{__rm} $RPM_BUILD_ROOT%{_libdir}/gwenhywfar/plugins/*/*/*.{la,a}
+%{__rm} $RPM_BUILD_ROOT%{_libdir}/*.la
 
 %find_lang %{name}
 
@@ -133,9 +134,6 @@ rm -rf $RPM_BUILD_ROOT
 %attr(755,root,root) %{_libdir}/libgwengui-gtk2.so
 %attr(755,root,root) %{_libdir}/libgwengui-qt4.so
 %attr(755,root,root) %{_libdir}/libgwenhywfar.so
-%{_libdir}/libgwengui-gtk2.la
-%{_libdir}/libgwengui-qt4.la
-%{_libdir}/libgwenhywfar.la
 %{_includedir}/gwenhywfar4
 %{_aclocaldir}/gwenhywfar.m4
 %{_pkgconfigdir}/gwengui-gtk2.pc
