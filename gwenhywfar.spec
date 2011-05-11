@@ -12,14 +12,19 @@ Group:		Libraries
 Source0:	%{name}-%{version}.tar.gz
 # Source0-md5:	03c22b95eb493c8c98284d3d2e4d9795
 URL:		http://www.aquamaniac.de/aqbanking/
-BuildRequires:	QtGui-devel
+BuildRequires:	QtGui-devel >= 4
 BuildRequires:	autoconf >= 2.60
 BuildRequires:	automake
 BuildRequires:	gettext-devel
 BuildRequires:	gnutls-devel >= 1.6.1
+BuildRequires:	gtk+2-devel >= 2:2.17.5
+BuildRequires:	libgcrypt-devel >= 1.2.0
 BuildRequires:	libtool
 BuildRequires:	openssl-devel
+BuildRequires:	pkgconfig
 BuildRequires:	qt4-build
+Requires:	gtk+2 >= 2:2.17.5
+Requires:	libgcrypt >= 1.2.0
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
 %description
@@ -44,7 +49,10 @@ Summary:	Header files for Gwenhywfar library
 Summary(pl.UTF-8):	Pliki nagłówkowe biblioteki Gwenhywfar
 Group:		Development/Libraries
 Requires:	%{name} = %{version}-%{release}
+Requires:	QtGui-devel >= 4
 Requires:	gnutls-devel >= 1.6.1
+Requires:	gtk+2-devel >= 2:2.17.5
+Requires:	libgcrypt-devel >= 1.2.0
 
 %description devel
 Header files for Gwenhywfar library.
