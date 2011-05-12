@@ -1,6 +1,8 @@
 #
 # TODO: - define _one_, system-wide place for ca-bundle.crt and use one, up-to-date file
-# - fox UI
+#
+# Conditional build:
+%bcond_without	fox	# FOX 1.6 GUI
 #
 Summary:	Gwenhywfar - a multi-platform helper library for networking and security
 Summary(pl.UTF-8):	Gwenhywfar - wieloplatformowa biblioteka pomocnicza do sieci i bezpieczeństwa
@@ -16,6 +18,7 @@ URL:		http://www.aquamaniac.de/aqbanking/
 BuildRequires:	QtGui-devel >= 4
 BuildRequires:	autoconf >= 2.60
 BuildRequires:	automake
+%{?with_fox:BuildRequires:	fox16-devel >= 1.6}
 BuildRequires:	gettext-devel
 BuildRequires:	gnutls-devel >= 1.6.1
 BuildRequires:	gtk+2-devel >= 2:2.17.5
@@ -24,7 +27,6 @@ BuildRequires:	libtool
 BuildRequires:	openssl-devel
 BuildRequires:	pkgconfig
 BuildRequires:	qt4-build
-Requires:	gtk+2 >= 2:2.17.5
 Requires:	libgcrypt >= 1.2.0
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
@@ -50,9 +52,7 @@ Summary:	Header files for Gwenhywfar library
 Summary(pl.UTF-8):	Pliki nagłówkowe biblioteki Gwenhywfar
 Group:		Development/Libraries
 Requires:	%{name} = %{version}-%{release}
-Requires:	QtGui-devel >= 4
 Requires:	gnutls-devel >= 1.6.1
-Requires:	gtk+2-devel >= 2:2.17.5
 Requires:	libgcrypt-devel >= 1.2.0
 
 %description devel
@@ -73,11 +73,53 @@ Static Gwenhywfar library.
 %description static -l pl.UTF-8
 Statyczna biblioteka Gwenhywfar.
 
+%package fox
+Summary:	GTK+ 2 Gwenhywfar GUI library implementation of the GWEN_DIALOG framework
+Summary(pl.UTF-8):	Biblioteka graficznego interfejsu GTK+ 2 do Gwenhywfar
+Group:		X11/Libraries
+Requires:	%{name} = %{version}-%{release}
+
+%description fox
+GTK+ 2 Gwenhywfar GUI library, containing GTK+ 2 implementation of the
+GWEN_DIALOG framework.
+
+%description fox
+Biblioteka graficznego interfejsu GTK+ 2 do Gwenhywfar, zawierająca
+implementację GTK+2 szkieletu GWEN_DIALOG.
+
+%package fox-devel
+Summary:	Header files for FOX 1.6 Gwenhywfar GUI library
+Summary(pl.UTF-8):	Pliki nagłówkowe biblioteki graficznego interfejsu FOX 1.6 do Gwenhywfar
+Group:		X11/Development/Libraries
+Requires:	%{name}-devel = %{version}-%{release}
+Requires:	%{name}-fox = %{version}-%{release}
+Requires:	fox16-devel >= 1.6
+
+%description fox-devel
+Header files for FOX 1.6 Gwenhywfar GUI library
+
+%description fox-devel -l pl.UTF-8
+Pliki nagłówkowe biblioteki graficznego interfejsu FOX 1.6 do
+Gwenhywfar.
+
+%package fox-static
+Summary:	Static FOX 1.6 Gwenhywfar GUI library
+Summary(pl.UTF-8):	Statyczna biblioteka graficznego interfejsu FOX 1.6 do Gwenhywfar
+Group:		X11/Development/Libraries
+Requires:	%{name}-fox-devel = %{version}-%{release}
+
+%description fox-static
+Static FOX 1.6 Gwenhywfar GUI library.
+
+%description fox-static -l pl.UTF-8
+Statyczna biblioteka graficznego interfejsu FOX 1.6 do Gwenhywfar.
+
 %package gtk
 Summary:	GTK+ 2 Gwenhywfar GUI library implementation of the GWEN_DIALOG framework
 Summary(pl.UTF-8):	Biblioteka graficznego interfejsu GTK+ 2 do Gwenhywfar
 Group:		X11/Libraries
 Requires:	%{name} = %{version}-%{release}
+Requires:	gtk+2 >= 2:2.17.5
 
 %description gtk
 GTK+ 2 Gwenhywfar GUI library, containing GTK+ 2 implementation of the
@@ -93,6 +135,7 @@ Summary(pl.UTF-8):	Pliki nagłówkowe biblioteki graficznego interfejsu GTK+ 2 d
 Group:		X11/Development/Libraries
 Requires:	%{name}-devel = %{version}-%{release}
 Requires:	%{name}-gtk = %{version}-%{release}
+Requires:	gtk+2-devel >= 2:2.17.5
 
 %description gtk-devel
 Header files for GTK+ 2 Gwenhywfar GUI library
@@ -133,6 +176,7 @@ Summary(pl.UTF-8):	Pliki nagłówkowe biblioteki graficznego interfejsu Qt 4 do 
 Group:		X11/Development/Libraries
 Requires:	%{name}-devel = %{version}-%{release}
 Requires:	%{name}-qt = %{version}-%{release}
+Requires:	QtGui-devel >= 4
 
 %description qt-devel
 Header files for Qt 4 Gwenhywfar GUI library
@@ -188,6 +232,9 @@ rm -rf $RPM_BUILD_ROOT
 %post	-p /sbin/ldconfig
 %postun	-p /sbin/ldconfig
 
+%post	fox -p /sbin/ldconfig
+%postun	fox -p /sbin/ldconfig
+
 %post	gtk -p /sbin/ldconfig
 %postun	gtk -p /sbin/ldconfig
 
@@ -232,6 +279,23 @@ rm -rf $RPM_BUILD_ROOT
 %files static
 %defattr(644,root,root,755)
 %{_libdir}/libgwenhywfar.a
+
+%if %{with fox}
+%files fox
+%defattr(644,root,root,755)
+%attr(755,root,root) %{_libdir}/libgwengui-fox16.so.*.*.*
+%attr(755,root,root) %ghost %{_libdir}/libgwengui-fox16.so.0
+
+%files fox-devel
+%defattr(644,root,root,755)
+%attr(755,root,root) %{_libdir}/libgwengui-fox16.so
+%{_includedir}/gwenhywfar4/gwen-gui-fox16
+%{_pkgconfigdir}/gwengui-fox16.pc
+
+%files fox-static
+%defattr(644,root,root,755)
+%{_libdir}/libgwengui-fox16.a
+%endif
 
 %files gtk
 %defattr(644,root,root,755)
