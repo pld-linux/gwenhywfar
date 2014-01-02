@@ -7,14 +7,14 @@
 Summary:	Gwenhywfar - a multi-platform helper library for networking and security
 Summary(pl.UTF-8):	Gwenhywfar - wieloplatformowa biblioteka pomocnicza do sieci i bezpieczeństwa
 Name:		gwenhywfar
-Version:	4.3.0
-Release:	2
+Version:	4.3.3
+Release:	1
 License:	LGPL v2.1+ with OpenSSL linking exception
 Group:		Libraries
 # http://www2.aquamaniac.de/sites/download/packages.php
-Source0:	http://www2.aquamaniac.de/sites/download/download.php?package=01&release=64&file=01&dummy=%{name}-%{version}.tar.gz#/%{name}-%{version}.tar.gz
-# Source0-md5:	6c3647c5a9065d0126b0e2b77752527b
-Patch0:		%{name}-gnutls.patch
+Source0:	http://www2.aquamaniac.de/sites/download/download.php?package=01&release=67&file=01&dummy=%{name}-%{version}.tar.gz?/%{name}-%{version}.tar.gz
+# Source0-md5:	c5b9d52a25960f84f9264a5a5dd484d1
+Patch0:		gcc.patch
 URL:		http://www.aquamaniac.de/aqbanking/
 BuildRequires:	QtGui-devel >= 4
 BuildRequires:	autoconf >= 2.60
