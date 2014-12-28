@@ -20,7 +20,7 @@ BuildRequires:	QtGui-devel >= 4
 BuildRequires:	autoconf >= 2.60
 BuildRequires:	automake
 %{?with_fox:BuildRequires:	fox16-devel >= 1.6}
-BuildRequires:	gettext-devel
+BuildRequires:	gettext-tools
 BuildRequires:	gnutls-devel >= 1.6.1
 BuildRequires:	gtk+2-devel >= 2:2.17.5
 BuildRequires:	libgcrypt-devel >= 1.2.0
