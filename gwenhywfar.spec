@@ -19,10 +19,9 @@ Version:	4.15.3
 Release:	1
 License:	LGPL v2.1+ with OpenSSL linking exception
 Group:		Libraries
-# http://www2.aquamaniac.de/sites/download/packages.php
-Source0:	https://www2.aquamaniac.de/sites/download/download.php?package=01&release=201&file=01&dummy=/%{name}-%{version}.tar.gz
+# https://www.aquamaniac.de/sites/download/packages.php
+Source0:	https://www.aquamaniac.de/sites/download/download.php?package=01&release=201&file=01&dummy=/%{name}-%{version}.tar.gz
 # Source0-md5:	4e96e68482a3cf1cfc00bd3645684c82
-#?/%{name}-%{version}.tar.gz
 Patch0:		gcc.patch
 Patch1:		%{name}-qt5.patch
 URL:		https://www.aquamaniac.de/sites/aqbanking/
