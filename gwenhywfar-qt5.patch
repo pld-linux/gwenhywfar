@@ -1,0 +1,48 @@
+--- gwenhywfar-4.15.3/m4/ax_have_qt.m4.orig	2016-01-15 21:09:17.000000000 +0100
++++ gwenhywfar-4.15.3/m4/ax_have_qt.m4	2017-02-06 18:49:26.285916677 +0100
+@@ -76,43 +76,16 @@
+ 
+   AC_MSG_CHECKING(for Qt)
+   # If we have Qt5 or later in the path, we're golden
+-  ver=`$QT_QMAKE --version | grep -o "Qt version ."`
+-  if test "$ver" ">" "Qt version 4"; then
++  ver="$($QT_QMAKE --version | sed -ne 's/.*Qt version \([[0-9]]\).*/\1/p')"
++  if test "$ver" -gt 4; then
+     have_qt=yes
+     # This pro file dumps qmake's variables, but it only works on Qt 5 or later
+     am_have_qt_pro=`mktemp`
+     am_have_qt_makefile=`mktemp`
+     # http://qt-project.org/doc/qt-5/qmake-variable-reference.html#qt
+     cat > $am_have_qt_pro << EOF
+-qtHaveModule(axcontainer):       QT += axcontainer
+-qtHaveModule(axserver):          QT += axserver
+-qtHaveModule(concurrent):        QT += concurrent
+ qtHaveModule(core):              QT += core
+-qtHaveModule(dbus):              QT += dbus
+-qtHaveModule(declarative):       QT += declarative
+-qtHaveModule(designer):          QT += designer
+ qtHaveModule(gui):               QT += gui
+-qtHaveModule(help):              QT += help
+-qtHaveModule(multimedia):        QT += multimedia
+-qtHaveModule(multimediawidgets): QT += multimediawidgets
+-qtHaveModule(network):           QT += network
+-qtHaveModule(opengl):            QT += opengl
+-qtHaveModule(printsupport):      QT += printsupport
+-qtHaveModule(qml):               QT += qml
+-qtHaveModule(qmltest):           QT += qmltest
+-qtHaveModule(x11extras):         QT += x11extras
+-qtHaveModule(script):            QT += script
+-qtHaveModule(scripttools):       QT += scripttools
+-qtHaveModule(sensors):           QT += sensors
+-qtHaveModule(serialport):        QT += serialport
+-qtHaveModule(sql):               QT += sql
+-qtHaveModule(svg):               QT += svg
+-qtHaveModule(testlib):           QT += testlib
+-qtHaveModule(uitools):           QT += uitools
+-qtHaveModule(webkit):            QT += webkit
+-qtHaveModule(webkitwidgets):     QT += webkitwidgets
+-qtHaveModule(xml):               QT += xml
+-qtHaveModule(xmlpatterns):       QT += xmlpatterns
+ qtHaveModule(widgets):           QT += widgets
+ percent.target = %
+ percent.commands = @echo -n "\$(\$(@))\ "
