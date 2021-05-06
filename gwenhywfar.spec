@@ -1,12 +1,15 @@
 #
 # TODO: - define _one_, system-wide place for ca-bundle.crt and use one, up-to-date file
+#	- fix qt5 link error and bring back qt5 gui subpackage
 #
 # Conditional build:
 %bcond_without	fox		# FOX 1.6 GUI
 %bcond_without	qt		# any Qt GUI (convenience)
 %bcond_without	qt4		# Qt 4 GUI
-%bcond_without	qt5		# Qt 5 GUI
+%bcond_with	qt5		# Qt 5 GUI
 %bcond_without	static_libs	# static libraries
+%bcond_with	tests		# run tests
+
 #
 %if %{without qt}
 %undefine	with_qt4
@@ -15,13 +18,13 @@
 Summary:	Gwenhywfar - a multi-platform helper library for networking and security
 Summary(pl.UTF-8):	Gwenhywfar - wieloplatformowa biblioteka pomocnicza do sieci i bezpieczeństwa
 Name:		gwenhywfar
-Version:	4.15.3
-Release:	3
+Version:	5.6.0
+Release:	0.2
 License:	LGPL v2.1+ with OpenSSL linking exception
 Group:		Libraries
 # https://www.aquamaniac.de/sites/download/packages.php
-Source0:	https://www.aquamaniac.de/sites/download/download.php?package=01&release=201&file=01&dummy=/%{name}-%{version}.tar.gz
-# Source0-md5:	4e96e68482a3cf1cfc00bd3645684c82
+Source0:	https://www.aquamaniac.de/rdm/attachments/download/364/%{name}-%{version}.tar.gz
+# Source0-md5:	d01434890cb213337c27a47dca28cc32
 Patch0:		gcc.patch
 Patch1:		%{name}-qt5.patch
 URL:		https://www.aquamaniac.de/sites/aqbanking/
@@ -31,6 +34,7 @@ BuildRequires:	automake
 BuildRequires:	gettext-tools
 BuildRequires:	gnutls-devel >= 2.9.8
 BuildRequires:	gtk+2-devel >= 2:2.17.5
+BuildRequires:	gtk+3-devel >= 3.10.8
 BuildRequires:	libgcrypt-devel >= 1.2.0
 BuildRequires:	libgpg-error-devel
 BuildRequires:	libstdc++-devel
@@ -147,7 +151,7 @@ Requires:	%{name}-gui-cpp = %{version}-%{release}
 FOX 1.6 Gwenhywfar GUI library, containing FOX implementation of the
 GWEN_DIALOG framework.
 
-%description fox
+%description fox -l pl.UTF-8
 Biblioteka graficznego interfejsu FOX 1.6 do Gwenhywfar, zawierająca
 implementację FOX szkieletu GWEN_DIALOG.
 
@@ -178,48 +182,92 @@ Static FOX 1.6 Gwenhywfar GUI library.
 %description fox-static -l pl.UTF-8
 Statyczna biblioteka graficznego interfejsu FOX 1.6 do Gwenhywfar.
 
-%package gtk
+%package gui-gtk2
 Summary:	GTK+ 2 Gwenhywfar GUI library implementation of the GWEN_DIALOG framework
 Summary(pl.UTF-8):	Biblioteka graficznego interfejsu GTK+ 2 do Gwenhywfar
 Group:		X11/Libraries
 Requires:	%{name} = %{version}-%{release}
 Requires:	gtk+2 >= 2:2.17.5
+Obsoletes:	gwenhywfar-gtk < 5.6.0
 
-%description gtk
+%description gui-gtk2
 GTK+ 2 Gwenhywfar GUI library, containing GTK+ 2 implementation of the
 GWEN_DIALOG framework.
 
-%description gtk
+%description gui-gtk2 -l pl.UTF-8
 Biblioteka graficznego interfejsu GTK+ 2 do Gwenhywfar, zawierająca
-implementację GTK+ 2 szkieletu GWEN_DIALOG.
+implementację gui-gtk2+ 2 szkieletu GWEN_DIALOG.
 
-# TODO: rename to -gui-gtk2 when something changes (e.g. when introducing gtk3 library)
-%package gtk-devel
+%package gui-gtk2-devel
 Summary:	Header files for GTK+ 2 Gwenhywfar GUI library
 Summary(pl.UTF-8):	Pliki nagłówkowe biblioteki graficznego interfejsu GTK+ 2 do Gwenhywfar
 Group:		X11/Development/Libraries
 Requires:	%{name}-devel = %{version}-%{release}
-Requires:	%{name}-gtk = %{version}-%{release}
+Requires:	%{name}-gui-gtk2 = %{version}-%{release}
 Requires:	gtk+2-devel >= 2:2.17.5
+Obsoletes:	gwenhywfar-gtk-devel < 5.6.0
 
-%description gtk-devel
+%description gui-gtk2-devel
 Header files for GTK+ 2 Gwenhywfar GUI library
 
-%description gtk-devel -l pl.UTF-8
+%description gui-gtk2-devel -l pl.UTF-8
 Pliki nagłówkowe biblioteki graficznego interfejsu GTK+ 2 do
 Gwenhywfar.
 
-%package gtk-static
+%package gui-gtk2-static
 Summary:	Static GTK+ 2 Gwenhywfar GUI library
 Summary(pl.UTF-8):	Statyczna biblioteka graficznego interfejsu GTK+ 2 do Gwenhywfar
 Group:		X11/Development/Libraries
-Requires:	%{name}-gtk-devel = %{version}-%{release}
+Requires:	%{name}-gui-gtk2-devel = %{version}-%{release}
+Obsoletes:	gwenhywfar-gtk-static < 5.6.0
 
-%description gtk-static
+%description gui-gtk2-static
 Static GTK+ 2 Gwenhywfar GUI library.
 
-%description gtk-static -l pl.UTF-8
+%description gui-gtk2-static -l pl.UTF-8
 Statyczna biblioteka graficznego interfejsu GTK+ 2 do Gwenhywfar.
+
+%package gui-gtk3
+Summary:	GTK+ 3 Gwenhywfar GUI library implementation of the GWEN_DIALOG framework
+Summary(pl.UTF-8):	Biblioteka graficznego interfejsu GTK+ 3 do Gwenhywfar
+Group:		X11/Libraries
+Requires:	%{name} = %{version}-%{release}
+Requires:	gtk+3 >= 3.10.8
+
+%description gui-gtk3
+GTK+ 3 Gwenhywfar GUI library, containing GTK+ 3 implementation of the
+GWEN_DIALOG framework.
+
+%description gui-gtk3 -l pl.UTF-8
+Biblioteka graficznego interfejsu GTK+ 3 do Gwenhywfar, zawierająca
+implementację GTK+ 3 szkieletu GWEN_DIALOG.
+
+%package gui-gtk3-devel
+Summary:	Header files for GTK+ 3 Gwenhywfar GUI library
+Summary(pl.UTF-8):	Pliki nagłówkowe biblioteki graficznego interfejsu GTK+ 2 do Gwenhywfar
+Group:		X11/Development/Libraries
+Requires:	%{name}-devel = %{version}-%{release}
+Requires:	%{name}-gui-gtk3 = %{version}-%{release}
+Requires:	gtk+3-devel >= 3.10.8
+
+%description gui-gtk3-devel
+Header files for GTK+ 3 Gwenhywfar GUI library
+
+%description gui-gtk3-devel -l pl.UTF-8
+Pliki nagłówkowe biblioteki graficznego interfejsu GTK+ 3 do
+Gwenhywfar.
+
+%package gui-gtk3-static
+Summary:	Static GTK+ 3 Gwenhywfar GUI library
+Summary(pl.UTF-8):	Statyczna biblioteka graficznego interfejsu GTK+ 3 do Gwenhywfar
+Group:		X11/Development/Libraries
+Requires:	%{name}-gui-gtk3-devel = %{version}-%{release}
+
+%description gui-gtk3-static
+Static GTK+ 3 Gwenhywfar GUI library.
+
+%description gui-gtk3-static -l pl.UTF-8
+Statyczna biblioteka graficznego interfejsu GTK+ 3 do Gwenhywfar.
 
 %package gui-qt4
 Summary:	Qt 4 Gwenhywfar GUI library implementation of the GWEN_DIALOG framework
@@ -232,7 +280,7 @@ Obsoletes:	gwenhywfar-qt < 4.15
 Qt 4 Gwenhywfar GUI library, containing Qt 4 implementation of the
 GWEN_DIALOG framework.
 
-%description gui-qt4
+%description gui-qt4 -l pl.UTF-8
 Biblioteka graficznego interfejsu Qt 4 do Gwenhywfar, zawierająca
 implementację Qt 4 szkieletu GWEN_DIALOG.
 
@@ -275,7 +323,7 @@ Requires:	%{name}-gui-cpp = %{version}-%{release}
 Qt 5 Gwenhywfar GUI library, containing Qt 5 implementation of the
 GWEN_DIALOG framework.
 
-%description gui-qt5
+%description gui-qt5 -l pl.UTF-8
 Biblioteka graficznego interfejsu Qt 5 do Gwenhywfar, zawierająca
 implementację Qt 5 szkieletu GWEN_DIALOG.
 
@@ -323,7 +371,7 @@ touch config.rpath
 %configure \
 	--disable-network-checks \
 	%{?with_static_libs:--enable-static} \
-	--with-guis="%{?with_fox:fox16 }gtk2%{?with_qt4: qt4}%{?with_qt5: qt5}" \
+	--with-guis="%{?with_fox:fox16 }gtk2 gtk3%{?with_qt4: qt4}%{?with_qt5: qt5}" \
 	--with-openssl-libs=%{_libdir} \
 	--with-qt4-libs=%{_libdir} \
 	--with-qt5-moc=%{_bindir}/moc-qt5 \
@@ -331,6 +379,10 @@ touch config.rpath
 	--with-qt5-uic=%{_bindir}/uic-qt5
 
 %{__make}
+
+%if %{with tests}
+%{__make} check
+%endif
 
 %install
 rm -rf $RPM_BUILD_ROOT
@@ -358,8 +410,11 @@ rm -rf $RPM_BUILD_ROOT
 %post	fox -p /sbin/ldconfig
 %postun	fox -p /sbin/ldconfig
 
-%post	gtk -p /sbin/ldconfig
-%postun	gtk -p /sbin/ldconfig
+%post	gui-gtk2 -p /sbin/ldconfig
+%postun	gui-gtk2 -p /sbin/ldconfig
+
+%post	gui-gtk3 -p /sbin/ldconfig
+%postun	gui-gtk3 -p /sbin/ldconfig
 
 %post	gui-qt4 -p /sbin/ldconfig
 %postun	gui-qt4 -p /sbin/ldconfig
@@ -377,7 +432,7 @@ rm -rf $RPM_BUILD_ROOT
 %attr(755,root,root) %{_bindir}/typemaker2
 %attr(755,root,root) %{_bindir}/xmlmerge
 %attr(755,root,root) %{_libdir}/libgwenhywfar.so.*.*.*
-%attr(755,root,root) %ghost %{_libdir}/libgwenhywfar.so.60
+%ghost %{_libdir}/libgwenhywfar.so.??
 %dir %{_libdir}/gwenhywfar
 %dir %{_libdir}/gwenhywfar/plugins
 %dir %{_libdir}/gwenhywfar/plugins/*
@@ -397,8 +452,8 @@ rm -rf $RPM_BUILD_ROOT
 %defattr(644,root,root,755)
 %attr(755,root,root) %{_bindir}/gwenhywfar-config
 %attr(755,root,root) %{_libdir}/libgwenhywfar.so
-%dir %{_includedir}/gwenhywfar4
-%{_includedir}/gwenhywfar4/gwenhywfar
+%dir %{_includedir}/gwenhywfar5
+%{_includedir}/gwenhywfar5/gwenhywfar
 %{_aclocaldir}/gwenhywfar.m4
 %{_pkgconfigdir}/gwenhywfar.pc
 %{_libdir}/cmake/gwenhywfar-%{ver_cmake}
@@ -412,12 +467,12 @@ rm -rf $RPM_BUILD_ROOT
 %files gui-cpp
 %defattr(644,root,root,755)
 %attr(755,root,root) %{_libdir}/libgwengui-cpp.so.*.*.*
-%attr(755,root,root) %ghost %{_libdir}/libgwengui-cpp.so.0
+%ghost %{_libdir}/libgwengui-cpp.so.??
 
 %files gui-cpp-devel
 %defattr(644,root,root,755)
 %attr(755,root,root) %{_libdir}/libgwengui-cpp.so
-%{_includedir}/gwenhywfar4/gwen-gui-cpp
+%{_includedir}/gwenhywfar5/gwen-gui-cpp
 %{_libdir}/cmake/gwengui-cpp-%{ver_cmake}
 
 %if %{with static_libs}
@@ -430,12 +485,12 @@ rm -rf $RPM_BUILD_ROOT
 %files fox
 %defattr(644,root,root,755)
 %attr(755,root,root) %{_libdir}/libgwengui-fox16.so.*.*.*
-%attr(755,root,root) %ghost %{_libdir}/libgwengui-fox16.so.0
+%ghost %{_libdir}/libgwengui-fox16.so.??
 
 %files fox-devel
 %defattr(644,root,root,755)
 %attr(755,root,root) %{_libdir}/libgwengui-fox16.so
-%{_includedir}/gwenhywfar4/gwen-gui-fox16
+%{_includedir}/gwenhywfar5/gwen-gui-fox16
 %{_pkgconfigdir}/gwengui-fox16.pc
 
 %if %{with static_libs}
@@ -445,33 +500,50 @@ rm -rf $RPM_BUILD_ROOT
 %endif
 %endif
 
-%files gtk
+%files gui-gtk2
 %defattr(644,root,root,755)
 %attr(755,root,root) %{_libdir}/libgwengui-gtk2.so.*.*.*
-%attr(755,root,root) %ghost %{_libdir}/libgwengui-gtk2.so.0
+%ghost %{_libdir}/libgwengui-gtk2.so.??
 
-%files gtk-devel
+%files gui-gtk2-devel
 %defattr(644,root,root,755)
 %attr(755,root,root) %{_libdir}/libgwengui-gtk2.so
-%{_includedir}/gwenhywfar4/gwen-gui-gtk2
+%{_includedir}/gwenhywfar5/gwen-gui-gtk2
 %{_pkgconfigdir}/gwengui-gtk2.pc
 
 %if %{with static_libs}
-%files gtk-static
+%files gui-gtk2-static
 %defattr(644,root,root,755)
 %{_libdir}/libgwengui-gtk2.a
+%endif
+
+%files gui-gtk3
+%defattr(644,root,root,755)
+%attr(755,root,root) %{_libdir}/libgwengui-gtk3.so.*.*.*
+%ghost %{_libdir}/libgwengui-gtk3.so.??
+
+%files gui-gtk3-devel
+%defattr(644,root,root,755)
+%attr(755,root,root) %{_libdir}/libgwengui-gtk3.so
+%{_includedir}/gwenhywfar5/gwen-gui-gtk3
+%{_pkgconfigdir}/gwengui-gtk3.pc
+
+%if %{with static_libs}
+%files gui-gtk3-static
+%defattr(644,root,root,755)
+%{_libdir}/libgwengui-gtk3.a
 %endif
 
 %if %{with qt4}
 %files gui-qt4
 %defattr(644,root,root,755)
 %attr(755,root,root) %{_libdir}/libgwengui-qt4.so.*.*.*
-%attr(755,root,root) %ghost %{_libdir}/libgwengui-qt4.so.0
+%ghost %{_libdir}/libgwengui-qt4.so.??
 
 %files gui-qt4-devel
 %defattr(644,root,root,755)
 %attr(755,root,root) %{_libdir}/libgwengui-qt4.so
-%{_includedir}/gwenhywfar4/gwen-gui-qt4
+%{_includedir}/gwenhywfar5/gwen-gui-qt4
 %{_pkgconfigdir}/gwengui-qt4.pc
 %{_libdir}/cmake/gwengui-qt4-%{ver_cmake}
 
@@ -486,12 +558,12 @@ rm -rf $RPM_BUILD_ROOT
 %files gui-qt5
 %defattr(644,root,root,755)
 %attr(755,root,root) %{_libdir}/libgwengui-qt5.so.*.*.*
-%attr(755,root,root) %ghost %{_libdir}/libgwengui-qt5.so.0
+%ghost %{_libdir}/libgwengui-qt5.so.??
 
 %files gui-qt5-devel
 %defattr(644,root,root,755)
 %attr(755,root,root) %{_libdir}/libgwengui-qt5.so
-%{_includedir}/gwenhywfar4/gwen-gui-qt5
+%{_includedir}/gwenhywfar5/gwen-gui-qt5
 %{_pkgconfigdir}/gwengui-qt5.pc
 %{_libdir}/cmake/gwengui-qt5-%{ver_cmake}
 
