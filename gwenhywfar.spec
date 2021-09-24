@@ -19,7 +19,7 @@ Summary:	Gwenhywfar - a multi-platform helper library for networking and securit
 Summary(pl.UTF-8):	Gwenhywfar - wieloplatformowa biblioteka pomocnicza do sieci i bezpieczeństwa
 Name:		gwenhywfar
 Version:	5.6.0
-Release:	
+Release:	1
 License:	LGPL v2.1+ with OpenSSL linking exception
 Group:		Libraries
 # https://www.aquamaniac.de/sites/download/packages.php
