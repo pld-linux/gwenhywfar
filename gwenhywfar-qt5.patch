@@ -1,8 +1,7 @@
-diff -up gwenhywfar-5.6.0/m4/ax_have_qt.m4.orig gwenhywfar-5.6.0/m4/ax_have_qt.m4
---- gwenhywfar-5.6.0/m4/ax_have_qt.m4.orig	2021-05-06 10:50:13.840745665 +0200
-+++ gwenhywfar-5.6.0/m4/ax_have_qt.m4	2021-05-06 10:53:38.396014533 +0200
-@@ -76,8 +76,8 @@ AC_DEFUN([AX_HAVE_QT],
- 
+--- gwenhywfar-5.7.3/m4/ax_have_qt.m4~	2021-09-10 14:31:02.000000000 +0000
++++ gwenhywfar-5.7.3/m4/ax_have_qt.m4	2021-10-09 04:49:27.508157541 +0000
+@@ -76,8 +76,8 @@
+   )
    AC_MSG_CHECKING(for Qt)
    # If we have Qt5 or later in the path, we're golden
 -  ver=`$QT_QMAKE --version | grep -o "Qt version ."`
@@ -11,4 +10,4 @@ diff -up gwenhywfar-5.6.0/m4/ax_have_qt.m4.orig gwenhywfar-5.6.0/m4/ax_have_qt.m
 +  if test "$ver" -gt 4; then
      have_qt=yes
      # This pro file dumps qmake's variables, but it only works on Qt 5 or later
-     am_have_qt_pro=`mktemp`
+     am_have_qt_dir=`mktemp -d`

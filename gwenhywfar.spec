@@ -18,13 +18,13 @@
 Summary:	Gwenhywfar - a multi-platform helper library for networking and security
 Summary(pl.UTF-8):	Gwenhywfar - wieloplatformowa biblioteka pomocnicza do sieci i bezpieczeństwa
 Name:		gwenhywfar
-Version:	5.6.0
+Version:	5.7.3
 Release:	1
 License:	LGPL v2.1+ with OpenSSL linking exception
 Group:		Libraries
 # https://www.aquamaniac.de/sites/download/packages.php
-Source0:	https://www.aquamaniac.de/rdm/attachments/download/364/%{name}-%{version}.tar.gz
-# Source0-md5:	d01434890cb213337c27a47dca28cc32
+Source0:	https://www.aquamaniac.de/rdm/attachments/download/390/%{name}-%{version}.tar.gz
+# Source0-md5:	ba92064a046501524064c926492ecc3d
 Patch0:		gcc.patch
 Patch1:		%{name}-qt5.patch
 URL:		https://www.aquamaniac.de/sites/aqbanking/
@@ -355,6 +355,20 @@ Static Qt 5 Gwenhywfar GUI library.
 %description gui-qt5-static -l pl.UTF-8
 Statyczna biblioteka graficznego interfejsu Qt 5 do Gwenhywfar.
 
+%package gwenbuild
+Summary:	Specific build system for the aqbanking universe
+Summary(pl.UTF-8):	Specyficzny system budowania dla uniwersum aqbanking
+Group:		Development/Libraries
+Requires:	%{name}-devel = %{version}
+
+%description gwenbuild
+Gwenbuild is a lightweight and fast build system tailored for the
+aqbanking universe.
+
+%description gwenbuild -l pl.UTF-8
+Gwenbuild to lekki i szybki system budowania dopasowany do uniwersum
+aqbanking.
+
 %prep
 %setup -q
 %patch0 -p1
@@ -573,3 +587,8 @@ rm -rf $RPM_BUILD_ROOT
 %{_libdir}/libgwengui-qt5.a
 %endif
 %endif
+
+%files gwenbuild
+%defattr(644,root,root,755)
+%attr(755,root,root) %{_bindir}/gwbuild
+%{_datadir}/gwenbuild
