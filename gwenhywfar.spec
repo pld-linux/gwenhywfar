@@ -6,7 +6,7 @@
 %bcond_without	fox		# FOX 1.6 GUI
 %bcond_without	qt		# any Qt GUI (convenience)
 %bcond_without	qt4		# Qt 4 GUI
-%bcond_with	qt5		# Qt 5 GUI
+%bcond_without	qt5		# Qt 5 GUI
 %bcond_without	static_libs	# static libraries
 %bcond_with	tests		# run tests
 
@@ -19,7 +19,7 @@ Summary:	Gwenhywfar - a multi-platform helper library for networking and securit
 Summary(pl.UTF-8):	Gwenhywfar - wieloplatformowa biblioteka pomocnicza do sieci i bezpieczeństwa
 Name:		gwenhywfar
 Version:	5.7.3
-Release:	1
+Release:	2
 License:	LGPL v2.1+ with OpenSSL linking exception
 Group:		Libraries
 # https://www.aquamaniac.de/sites/download/packages.php
@@ -392,7 +392,8 @@ touch config.rpath
 	--with-qt5-qmake=%{_bindir}/qmake-qt5 \
 	--with-qt5-uic=%{_bindir}/uic-qt5
 
-%{__make}
+%{__make} \
+	QT_LIBS="-lQt5Widgets -lQt5Gui -lQt5Core -lGL -lpthread"
 
 %if %{with tests}
 %{__make} check
