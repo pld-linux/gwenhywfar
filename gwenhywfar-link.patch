@@ -1,0 +1,20 @@
+Avoid -L/usr/lib* during libgwengui-qt4 linking to use newly built libgwengui-cpp instead of system one.
+
+--- gwenhywfar-5.10.2/m4/qt4.m4.orig	2019-09-24 22:32:09.000000000 +0200
++++ gwenhywfar-5.10.2/m4/qt4.m4	2023-10-26 19:51:25.941284777 +0200
+@@ -132,10 +132,13 @@ if test -z "$qt4_libs"; then
+    AQ_SEARCH_FOR_PATH([$qt_searchname],[$local_qt4_libs])
+    if test -n "$found_dir" ; then
+      if test "x$host" = "xi686-w64-mingw32" || test "x$host" = "xx86_64-w64-mingw32"; then
+-       qt4_libs="-L$found_dir -l${qt_libname}4 -lQtCore4 -no-undefined"
++       qt4_libs="-l${qt_libname}4 -lQtCore4 -no-undefined"
+      else
+-     qt4_libs="-L$found_dir -l${qt_libname} -lQtCore"
++     qt4_libs="-l${qt_libname} -lQtCore"
+    fi
++     if test "$found_dir" != "$libdir"; then
++       qt4_libs="-L$found_dir $qt4_libs"
++     fi
+    fi
+ fi
+ 

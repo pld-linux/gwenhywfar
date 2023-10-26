@@ -1,6 +1,5 @@
 #
 # TODO: - define _one_, system-wide place for ca-bundle.crt and use one, up-to-date file
-#	- fix qt5 link error and bring back qt5 gui subpackage
 #
 # Conditional build:
 %bcond_without	fox		# FOX 1.6 GUI
@@ -18,15 +17,16 @@
 Summary:	Gwenhywfar - a multi-platform helper library for networking and security
 Summary(pl.UTF-8):	Gwenhywfar - wieloplatformowa biblioteka pomocnicza do sieci i bezpieczeństwa
 Name:		gwenhywfar
-Version:	5.7.3
-Release:	2
+Version:	5.10.2
+Release:	1
 License:	LGPL v2.1+ with OpenSSL linking exception
 Group:		Libraries
-# https://www.aquamaniac.de/sites/download/packages.php
-Source0:	https://www.aquamaniac.de/rdm/attachments/download/390/%{name}-%{version}.tar.gz
-# Source0-md5:	ba92064a046501524064c926492ecc3d
+#Source0Download: https://www.aquamaniac.de/rdm/projects/gwenhywfar/files
+Source0:	https://www.aquamaniac.de/rdm/attachments/download/501/%{name}-%{version}.tar.gz
+# Source0-md5:	a5d78549dcec73844d891c6a0a703e19
 Patch0:		gcc.patch
 Patch1:		%{name}-qt5.patch
+Patch2:		%{name}-link.patch
 URL:		https://www.aquamaniac.de/sites/aqbanking/
 BuildRequires:	autoconf >= 2.60
 BuildRequires:	automake
@@ -373,6 +373,7 @@ aqbanking.
 %setup -q
 %patch0 -p1
 %patch1 -p1
+%patch2 -p1
 
 %build
 # gettextize not used (custom support instead of AM_GNU_GETTEXT)
