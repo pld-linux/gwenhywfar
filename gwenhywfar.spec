@@ -17,13 +17,13 @@
 Summary:	Gwenhywfar - a multi-platform helper library for networking and security
 Summary(pl.UTF-8):	Gwenhywfar - wieloplatformowa biblioteka pomocnicza do sieci i bezpieczeństwa
 Name:		gwenhywfar
-Version:	5.10.2
+Version:	5.14.1
 Release:	1
 License:	LGPL v2.1+ with OpenSSL linking exception
 Group:		Libraries
 #Source0Download: https://www.aquamaniac.de/rdm/projects/gwenhywfar/files
-Source0:	https://www.aquamaniac.de/rdm/attachments/download/501/%{name}-%{version}.tar.gz
-# Source0-md5:	a5d78549dcec73844d891c6a0a703e19
+Source0:	https://www.aquamaniac.de/rdm/attachments/download/630/%{name}-%{version}.tar.gz
+# Source0-md5:	39c861129aad4110d3f822091bc03509
 Patch0:		gcc.patch
 Patch1:		%{name}-qt5.patch
 Patch2:		%{name}-link.patch
@@ -376,23 +376,23 @@ aqbanking.
 %patch -P2 -p1
 
 %build
-# gettextize not used (custom support instead of AM_GNU_GETTEXT)
-touch config.rpath
+%{__gettextize}
 %{__libtoolize}
 %{__aclocal} -I m4
 %{__autoconf}
 %{__autoheader}
 %{__automake}
 %configure \
+	QMAKE=%{_bindir}/qmake-qt5 \
+	QT_MOC=%{_bindir}/moc-qt5 \
+	QT_UIC=%{_bindir}/uic-qt5 \
 	--disable-network-checks \
 	%{?with_static_libs:--enable-static} \
 	--with-guis="%{?with_fox:fox16 }gtk2 gtk3%{?with_qt4: qt4}%{?with_qt5: qt5}" \
 	--with-openssl-libs=%{_libdir} \
-	--with-qt4-libs=%{_libdir} \
-	--with-qt5-moc=%{_bindir}/moc-qt5 \
-	--with-qt5-qmake=%{_bindir}/qmake-qt5 \
-	--with-qt5-uic=%{_bindir}/uic-qt5
+	--with-qt4-libs=%{_libdir}
 
+# QT_LIBS is workaround for libtool ignoring /absolute/path/lib.so args (+remove redundant libs from linking)
 %{__make} \
 	QT_LIBS="-lQt5Widgets -lQt5Gui -lQt5Core -lGL -lpthread"
 
@@ -447,19 +447,19 @@ rm -rf $RPM_BUILD_ROOT
 %attr(755,root,root) %{_bindir}/typemaker
 %attr(755,root,root) %{_bindir}/typemaker2
 %attr(755,root,root) %{_bindir}/xmlmerge
-%attr(755,root,root) %{_libdir}/libgwenhywfar.so.*.*.*
-%ghost %{_libdir}/libgwenhywfar.so.??
+%{_libdir}/libgwenhywfar.so.*.*.*
+%ghost %{_libdir}/libgwenhywfar.so.79
 %dir %{_libdir}/gwenhywfar
 %dir %{_libdir}/gwenhywfar/plugins
 %dir %{_libdir}/gwenhywfar/plugins/*
 %dir %{_libdir}/gwenhywfar/plugins/*/ct
-%attr(755,root,root) %{_libdir}/gwenhywfar/plugins/*/ct/*.so*
+%{_libdir}/gwenhywfar/plugins/*/ct/*.so*
 %{_libdir}/gwenhywfar/plugins/*/ct/*.xml
 %dir %{_libdir}/gwenhywfar/plugins/*/dbio
-%attr(755,root,root) %{_libdir}/gwenhywfar/plugins/*/dbio/*.so*
+%{_libdir}/gwenhywfar/plugins/*/dbio/*.so*
 %{_libdir}/gwenhywfar/plugins/*/dbio/*.xml
 %dir %{_libdir}/gwenhywfar/plugins/*/configmgr
-%attr(755,root,root) %{_libdir}/gwenhywfar/plugins/*/configmgr/*.so
+%{_libdir}/gwenhywfar/plugins/*/configmgr/*.so
 %{_libdir}/gwenhywfar/plugins/*/configmgr/*.xml
 # just ca-bundle.crt
 %{_datadir}/gwenhywfar
@@ -467,7 +467,7 @@ rm -rf $RPM_BUILD_ROOT
 %files devel
 %defattr(644,root,root,755)
 %attr(755,root,root) %{_bindir}/gwenhywfar-config
-%attr(755,root,root) %{_libdir}/libgwenhywfar.so
+%{_libdir}/libgwenhywfar.so
 %dir %{_includedir}/gwenhywfar5
 %{_includedir}/gwenhywfar5/gwenhywfar
 %{_aclocaldir}/gwenhywfar.m4
@@ -482,12 +482,12 @@ rm -rf $RPM_BUILD_ROOT
 
 %files gui-cpp
 %defattr(644,root,root,755)
-%attr(755,root,root) %{_libdir}/libgwengui-cpp.so.*.*.*
-%ghost %{_libdir}/libgwengui-cpp.so.??
+%{_libdir}/libgwengui-cpp.so.*.*.*
+%ghost %{_libdir}/libgwengui-cpp.so.79
 
 %files gui-cpp-devel
 %defattr(644,root,root,755)
-%attr(755,root,root) %{_libdir}/libgwengui-cpp.so
+%{_libdir}/libgwengui-cpp.so
 %{_includedir}/gwenhywfar5/gwen-gui-cpp
 %{_libdir}/cmake/gwengui-cpp-%{ver_cmake}
 
@@ -500,12 +500,12 @@ rm -rf $RPM_BUILD_ROOT
 %if %{with fox}
 %files fox
 %defattr(644,root,root,755)
-%attr(755,root,root) %{_libdir}/libgwengui-fox16.so.*.*.*
-%ghost %{_libdir}/libgwengui-fox16.so.??
+%{_libdir}/libgwengui-fox16.so.*.*.*
+%{_libdir}/libgwengui-fox16.so.79
 
 %files fox-devel
 %defattr(644,root,root,755)
-%attr(755,root,root) %{_libdir}/libgwengui-fox16.so
+%{_libdir}/libgwengui-fox16.so
 %{_includedir}/gwenhywfar5/gwen-gui-fox16
 %{_pkgconfigdir}/gwengui-fox16.pc
 
@@ -518,12 +518,12 @@ rm -rf $RPM_BUILD_ROOT
 
 %files gui-gtk2
 %defattr(644,root,root,755)
-%attr(755,root,root) %{_libdir}/libgwengui-gtk2.so.*.*.*
-%ghost %{_libdir}/libgwengui-gtk2.so.??
+%{_libdir}/libgwengui-gtk2.so.*.*.*
+%ghost %{_libdir}/libgwengui-gtk2.so.79
 
 %files gui-gtk2-devel
 %defattr(644,root,root,755)
-%attr(755,root,root) %{_libdir}/libgwengui-gtk2.so
+%{_libdir}/libgwengui-gtk2.so
 %{_includedir}/gwenhywfar5/gwen-gui-gtk2
 %{_pkgconfigdir}/gwengui-gtk2.pc
 
@@ -535,12 +535,12 @@ rm -rf $RPM_BUILD_ROOT
 
 %files gui-gtk3
 %defattr(644,root,root,755)
-%attr(755,root,root) %{_libdir}/libgwengui-gtk3.so.*.*.*
-%ghost %{_libdir}/libgwengui-gtk3.so.??
+%{_libdir}/libgwengui-gtk3.so.*.*.*
+%ghost %{_libdir}/libgwengui-gtk3.so.79
 
 %files gui-gtk3-devel
 %defattr(644,root,root,755)
-%attr(755,root,root) %{_libdir}/libgwengui-gtk3.so
+%{_libdir}/libgwengui-gtk3.so
 %{_includedir}/gwenhywfar5/gwen-gui-gtk3
 %{_pkgconfigdir}/gwengui-gtk3.pc
 
@@ -553,12 +553,12 @@ rm -rf $RPM_BUILD_ROOT
 %if %{with qt4}
 %files gui-qt4
 %defattr(644,root,root,755)
-%attr(755,root,root) %{_libdir}/libgwengui-qt4.so.*.*.*
-%ghost %{_libdir}/libgwengui-qt4.so.??
+%{_libdir}/libgwengui-qt4.so.*.*.*
+%ghost %{_libdir}/libgwengui-qt4.so.79
 
 %files gui-qt4-devel
 %defattr(644,root,root,755)
-%attr(755,root,root) %{_libdir}/libgwengui-qt4.so
+%{_libdir}/libgwengui-qt4.so
 %{_includedir}/gwenhywfar5/gwen-gui-qt4
 %{_pkgconfigdir}/gwengui-qt4.pc
 %{_libdir}/cmake/gwengui-qt4-%{ver_cmake}
@@ -573,12 +573,12 @@ rm -rf $RPM_BUILD_ROOT
 %if %{with qt5}
 %files gui-qt5
 %defattr(644,root,root,755)
-%attr(755,root,root) %{_libdir}/libgwengui-qt5.so.*.*.*
-%ghost %{_libdir}/libgwengui-qt5.so.??
+%{_libdir}/libgwengui-qt5.so.*.*.*
+%ghost %{_libdir}/libgwengui-qt5.so.79
 
 %files gui-qt5-devel
 %defattr(644,root,root,755)
-%attr(755,root,root) %{_libdir}/libgwengui-qt5.so
+%{_libdir}/libgwengui-qt5.so
 %{_includedir}/gwenhywfar5/gwen-gui-qt5
 %{_pkgconfigdir}/gwengui-qt5.pc
 %{_libdir}/cmake/gwengui-qt5-%{ver_cmake}
