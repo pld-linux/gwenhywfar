@@ -1,6 +1,6 @@
---- gwenhywfar-5.14.0/m4/ax_have_qt.m4.orig	2025-07-06 19:48:38.000000000 +0200
-+++ gwenhywfar-5.14.0/m4/ax_have_qt.m4	2026-04-15 05:35:51.621602590 +0200
-@@ -80,9 +80,9 @@ AC_DEFUN([AX_HAVE_QT],
+--- gwenhywfar-5.14.1/m4/ax_have_qt.m4.orig	2025-07-06 19:48:38.000000000 +0200
++++ gwenhywfar-5.14.1/m4/ax_have_qt.m4	2026-04-16 20:51:16.295981068 +0200
+@@ -80,10 +80,14 @@ AC_DEFUN([AX_HAVE_QT],
    AC_MSG_CHECKING(for Qt)
    am_have_qt_qmexe_suff=`echo $QMAKE | sed 's,^.*qmake,,'`
    # If we have Qt5 or later in the path, we're golden
@@ -9,6 +9,22 @@
  
 -  if test "$ver" ">" "Qt version 4"; then
 +  if test "$ver" -gt 4; then
++   if test "$ver" -gt 5; then
++    QT_MAJOR_VERSION="6"
++   else
      QT_MAJOR_VERSION="5"
++   fi
      have_qt=yes
      # This pro file dumps qmake's variables, but it only works on Qt 5 or later
+     am_have_qt_dir=`mktemp -d`
+--- gwenhywfar-5.14.1/gui/qt5/Makefile.am.orig	2026-04-16 21:31:24.532934528 +0200
++++ gwenhywfar-5.14.1/gui/qt5/Makefile.am	2026-04-16 21:31:49.336133490 +0200
+@@ -29,7 +29,7 @@ nodist_libgwengui_qt@QT_MAJOR_VERSION@_l
+ nodist_noinst_HEADERS=
+ 
+ 
+-iheaderdir=${gwenhywfar_headerdir_am}/gwen-gui-qt5
++iheaderdir=${gwenhywfar_headerdir_am}/gwen-gui-qt@QT_MAJOR_VERSION@
+ iheader_HEADERS=\
+  qt5_gui.hpp \
+  qt5_gui_dialog.hpp \

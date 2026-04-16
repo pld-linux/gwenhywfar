@@ -6,6 +6,7 @@
 %bcond_without	qt		# any Qt GUI (convenience)
 %bcond_without	qt4		# Qt 4 GUI
 %bcond_without	qt5		# Qt 5 GUI
+%bcond_without	qt6		# Qt 6 GUI
 %bcond_without	static_libs	# static libraries
 %bcond_with	tests		# run tests
 
@@ -13,6 +14,7 @@
 %if %{without qt}
 %undefine	with_qt4
 %undefine	with_qt5
+%undefine	with_qt6
 %endif
 Summary:	Gwenhywfar - a multi-platform helper library for networking and security
 Summary(pl.UTF-8):	Gwenhywfar - wieloplatformowa biblioteka pomocnicza do sieci i bezpieczeństwa
@@ -52,6 +54,13 @@ BuildRequires:	Qt5Gui-devel >= 5
 BuildRequires:	Qt5Widgets-devel >= 5
 BuildRequires:	qt5-build >= 5
 BuildRequires:	qt5-qmake >= 5
+%endif
+%if %{with qt6}
+BuildRequires:	Qt6Core-devel >= 6
+BuildRequires:	Qt6Gui-devel >= 6
+BuildRequires:	Qt6Widgets-devel >= 6
+BuildRequires:	qt6-build >= 6
+BuildRequires:	qt6-qmake >= 6
 %endif
 Requires:	gnutls-libs >= 2.9.8
 Requires:	libgcrypt >= 1.2.0
@@ -355,6 +364,36 @@ Static Qt 5 Gwenhywfar GUI library.
 %description gui-qt5-static -l pl.UTF-8
 Statyczna biblioteka graficznego interfejsu Qt 5 do Gwenhywfar.
 
+%package gui-qt6
+Summary:	Qt 6 Gwenhywfar GUI library implementation of the GWEN_DIALOG framework
+Summary(pl.UTF-8):	Biblioteka graficznego interfejsu Qt 6 do Gwenhywfar
+Group:		X11/Libraries
+Requires:	%{name}-gui-cpp = %{version}-%{release}
+
+%description gui-qt6
+Qt 6 Gwenhywfar GUI library, containing Qt 6 implementation of the
+GWEN_DIALOG framework.
+
+%description gui-qt6 -l pl.UTF-8
+Biblioteka graficznego interfejsu Qt 6 do Gwenhywfar, zawierająca
+implementację Qt 6 szkieletu GWEN_DIALOG.
+
+%package gui-qt6-devel
+Summary:	Header files for Qt 6 Gwenhywfar GUI library
+Summary(pl.UTF-8):	Pliki nagłówkowe biblioteki graficznego interfejsu Qt 6 do Gwenhywfar
+Group:		X11/Development/Libraries
+Requires:	%{name}-gui-cpp-devel = %{version}-%{release}
+Requires:	%{name}-gui-qt6 = %{version}-%{release}
+Requires:	Qt5Core-devel >= 6
+Requires:	Qt5Gui-devel >= 6
+Requires:	Qt5Widgets-devel >= 6
+
+%description gui-qt6-devel
+Header files for Qt 6 Gwenhywfar GUI library
+
+%description gui-qt6-devel -l pl.UTF-8
+Pliki nagłówkowe biblioteki graficznego interfejsu Qt 6 do Gwenhywfar.
+
 %package gwenbuild
 Summary:	Specific build system for the aqbanking universe
 Summary(pl.UTF-8):	Specyficzny system budowania dla uniwersum aqbanking
@@ -382,6 +421,11 @@ aqbanking.
 %{__autoconf}
 %{__autoheader}
 %{__automake}
+
+%define	configuredir ..
+
+install -d build
+cd build
 %configure \
 	QMAKE=%{_bindir}/qmake-qt5 \
 	QT_MOC=%{_bindir}/moc-qt5 \
@@ -394,16 +438,38 @@ aqbanking.
 
 # QT_LIBS is workaround for libtool ignoring /absolute/path/lib.so args (+remove redundant libs from linking)
 %{__make} \
-	QT_LIBS="-lQt5Widgets -lQt5Gui -lQt5Core -lGL -lpthread"
+	QT_LIBS="-lQt5Widgets -lQt5Gui -lQt5Core"
 
 %if %{with tests}
 %{__make} check
+%endif
+cd ..
+
+%if %{with qt6}
+# gwenhywfar configure doesn't allow building both qt5 & qt6 in one shot
+install -d build-qt6
+cd build-qt6
+%configure \
+	QMAKE=%{_bindir}/qmake-qt6 \
+	QT_MOC=%{_bindir}/moc-qt6 \
+	QT_UIC=%{_bindir}/uic-qt6 \
+	--disable-network-checks \
+	--with-guis="qt6" \
+	--with-openssl-libs=%{_libdir}
+
+%{__make} \
+	QT_LIBS="-lQt6Widgets -lQt6Gui -lQt6Core"
 %endif
 
 %install
 rm -rf $RPM_BUILD_ROOT
 
-%{__make} install \
+%if %{with qt6}
+%{__make} -C build-qt6 install \
+	DESTDIR=$RPM_BUILD_ROOT
+%endif
+
+%{__make} -C build install \
 	DESTDIR=$RPM_BUILD_ROOT
 
 %{__rm} $RPM_BUILD_ROOT%{_libdir}/*.la \
@@ -437,6 +503,9 @@ rm -rf $RPM_BUILD_ROOT
 
 %post	gui-qt5 -p /sbin/ldconfig
 %postun	gui-qt5 -p /sbin/ldconfig
+
+%post	gui-qt6 -p /sbin/ldconfig
+%postun	gui-qt6 -p /sbin/ldconfig
 
 %files -f %{name}.lang
 %defattr(644,root,root,755)
@@ -588,6 +657,20 @@ rm -rf $RPM_BUILD_ROOT
 %defattr(644,root,root,755)
 %{_libdir}/libgwengui-qt5.a
 %endif
+%endif
+
+%if %{with qt6}
+%files gui-qt6
+%defattr(644,root,root,755)
+%{_libdir}/libgwengui-qt6.so.*.*.*
+%ghost %{_libdir}/libgwengui-qt6.so.79
+
+%files gui-qt6-devel
+%defattr(644,root,root,755)
+%{_libdir}/libgwengui-qt6.so
+%{_includedir}/gwenhywfar5/gwen-gui-qt6
+%{_pkgconfigdir}/gwengui-qt6.pc
+%{_libdir}/cmake/gwengui-qt6-%{ver_cmake}
 %endif
 
 %files gwenbuild
