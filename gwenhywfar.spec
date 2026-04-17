@@ -29,7 +29,7 @@ Source0:	https://www.aquamaniac.de/rdm/attachments/download/630/%{name}-%{versio
 Patch0:		gcc.patch
 Patch1:		%{name}-qt5.patch
 Patch2:		%{name}-link.patch
-URL:		https://www.aquamaniac.de/sites/aqbanking/
+URL:		https://www.aquamaniac.de/rdm/projects/gwenhywfar
 BuildRequires:	autoconf >= 2.60
 BuildRequires:	automake
 %{?with_fox:BuildRequires:	fox16-devel >= 1.6}
