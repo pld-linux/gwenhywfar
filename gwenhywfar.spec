@@ -43,6 +43,7 @@ BuildRequires:	libstdc++-devel
 BuildRequires:	libtool >= 2:1.5
 BuildRequires:	openssl-devel
 BuildRequires:	pkgconfig
+BuildRequires:	rpmbuild(macros) >= 2.043
 %if %{with qt4}
 BuildRequires:	QtCore-devel >= 4
 BuildRequires:	QtGui-devel >= 4
