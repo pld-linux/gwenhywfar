@@ -20,7 +20,7 @@ Summary:	Gwenhywfar - a multi-platform helper library for networking and securit
 Summary(pl.UTF-8):	Gwenhywfar - wieloplatformowa biblioteka pomocnicza do sieci i bezpieczeństwa
 Name:		gwenhywfar
 Version:	5.14.1
-Release:	1
+Release:	2
 License:	LGPL v2.1+ with OpenSSL linking exception
 Group:		Libraries
 #Source0Download: https://www.aquamaniac.de/rdm/projects/gwenhywfar/files
@@ -385,9 +385,9 @@ Summary(pl.UTF-8):	Pliki nagłówkowe biblioteki graficznego interfejsu Qt 6 do 
 Group:		X11/Development/Libraries
 Requires:	%{name}-gui-cpp-devel = %{version}-%{release}
 Requires:	%{name}-gui-qt6 = %{version}-%{release}
-Requires:	Qt5Core-devel >= 6
-Requires:	Qt5Gui-devel >= 6
-Requires:	Qt5Widgets-devel >= 6
+Requires:	Qt6Core-devel >= 6
+Requires:	Qt6Gui-devel >= 6
+Requires:	Qt6Widgets-devel >= 6
 
 %description gui-qt6-devel
 Header files for Qt 6 Gwenhywfar GUI library
